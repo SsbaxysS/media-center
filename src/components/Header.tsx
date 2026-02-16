@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Newspaper } from 'lucide-react';
+import { Menu, X, Newspaper, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function Header() {
@@ -15,65 +15,53 @@ export function Header() {
     }, []);
 
     return (
-        <motion.header
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'pt-4' : 'pt-6'}`}
-        >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`
-          relative flex justify-between items-center h-16 px-6 rounded-2xl transition-all duration-300
-          ${isScrolled ? 'bg-slate-900/80 backdrop-blur-md border border-slate-700/50 shadow-lg' : 'bg-transparent'}
-        `}>
-                    <div className="flex items-center gap-3">
-                        <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-lg shadow-lg shadow-blue-500/20">
-                            <Newspaper className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-lg font-bold text-white leading-tight font-display tracking-wide">МедиаЦентр</h1>
-                        </div>
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-[#050507]/80 backdrop-blur-xl border-b border-white/[0.04]' : 'bg-transparent'}`}>
+            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="#" className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center shadow-lg shadow-violet-600/20">
+                        <Newspaper className="text-white w-4 h-4" />
                     </div>
+                    <span className="font-semibold text-sm tracking-tight text-white">МедиаЦентр</span>
+                </a>
 
-                    <nav className="hidden md:flex gap-8">
-                        {['Главная', 'О нас', 'Проекты', 'Новости', 'Команда'].map((item, index) => (
-                            <a
-                                key={index}
-                                href={`#${item === 'Главная' ? 'hero' : item === 'О нас' ? 'about' : item === 'Проекты' ? 'about' : item === 'Новости' ? 'news' : 'team'}`}
-                                className="text-slate-300 hover:text-white font-medium transition-colors text-sm hover:scale-105 transform duration-200"
-                            >
-                                {item}
-                            </a>
-                        ))}
-                    </nav>
+                <div className="hidden md:flex items-center gap-8 text-[13px] text-zinc-400">
+                    <a href="#hero" className="hover:text-white transition-colors">Главная</a>
+                    <a href="#about" className="hover:text-white transition-colors">О нас</a>
+                    <a href="#news" className="hover:text-white transition-colors">Новости</a>
+                    <a href="#team" className="hover:text-white transition-colors">Команда</a>
+                </div>
 
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="p-2 text-slate-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                        >
-                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
-                    </div>
+                <div className="hidden md:flex items-center gap-3">
+                    <a href="#news" className="flex items-center gap-2 text-[13px] font-medium bg-violet-600 text-white px-4 py-2 rounded-lg hover:bg-violet-500 transition-colors shadow-lg shadow-violet-600/20">
+                        Смотреть новости <ArrowRight className="w-3.5 h-3.5" />
+                    </a>
+                </div>
+
+                <div className="md:hidden">
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="p-2 text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                        {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                    </button>
                 </div>
             </div>
 
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-24 left-4 right-4 md:hidden rounded-2xl bg-slate-800/90 backdrop-blur-xl border border-slate-700 shadow-2xl overflow-hidden"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="md:hidden border-b border-white/[0.04] bg-[#050507]"
                     >
-                        <div className="p-4 space-y-2">
-                            {['Главная', 'О нас', 'Проекты', 'Новости', 'Команда'].map((item, index) => (
+                        <div className="px-6 py-4 space-y-2">
+                            {['Главная', 'О нас', 'Новости', 'Команда'].map((item) => (
                                 <a
-                                    key={index}
-                                    href={`#${item === 'Главная' ? 'hero' : item === 'О нас' ? 'about' : item === 'Проекты' ? 'about' : item === 'Новости' ? 'news' : 'team'}`}
+                                    key={item}
+                                    href={`#${item === 'Главная' ? 'hero' : item === 'О нас' ? 'about' : item === 'Новости' ? 'news' : 'team'}`}
                                     onClick={() => setIsMenuOpen(false)}
-                                    className="block px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-xl font-medium transition-colors"
+                                    className="block py-2 text-sm text-zinc-400 hover:text-white transition-colors"
                                 >
                                     {item}
                                 </a>
@@ -82,6 +70,6 @@ export function Header() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.header>
+        </nav>
     );
 }

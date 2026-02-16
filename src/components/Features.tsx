@@ -1,5 +1,6 @@
 import { MonitorPlay, Radio, Newspaper } from 'lucide-react';
 import ElectricBorder from './ElectricBorder';
+import { motion, Variants } from 'motion/react';
 
 const features = [
     {
@@ -22,6 +23,21 @@ const features = [
     }
 ];
 
+const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.2
+        }
+    }
+};
+
+const item: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 50 } }
+};
+
 export function Features() {
     return (
         <section id="about" className="py-24 px-6 bg-[#050507]">
@@ -33,21 +49,29 @@ export function Features() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                >
                     {features.map((f, i) => (
-                        <ElectricBorder key={i} color={f.color} speed={0.5}>
-                            <div className="h-full bg-[#050507] p-8 rounded-[24px]">
-                                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br from-${f.color === '#3b82f6' ? 'blue' : f.color === '#8b5cf6' ? 'violet' : 'emerald'}-500/10`}>
-                                    <f.icon className="w-6 h-6" style={{ color: f.color }} />
+                        <motion.div variants={item} key={i}>
+                            <ElectricBorder color={f.color} speed={0.5}>
+                                <div className="h-full bg-[#050507] p-8 rounded-[24px] hover:translate-y-[-5px] transition-transform duration-300">
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-gradient-to-br from-${f.color === '#3b82f6' ? 'blue' : f.color === '#8b5cf6' ? 'violet' : 'emerald'}-500/10`}>
+                                        <f.icon className="w-6 h-6" style={{ color: f.color }} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-white mb-3">{f.title}</h3>
+                                    <p className="text-zinc-500 text-sm leading-relaxed">
+                                        {f.description}
+                                    </p>
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-3">{f.title}</h3>
-                                <p className="text-zinc-500 text-sm leading-relaxed">
-                                    {f.description}
-                                </p>
-                            </div>
-                        </ElectricBorder>
+                            </ElectricBorder>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

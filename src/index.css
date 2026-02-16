@@ -47,10 +47,16 @@ textarea {
   field-sizing: content;
 }
 
+
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #fff;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(20px);
   }
 
   to {
@@ -60,5 +66,11 @@ textarea {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.4s ease-out forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Hide default cursor only on non-touch devices if needed, 
+   but usually keeping it visible + custom cursor is safer for UX unless fully replaced.
+   For now, we keep default cursor but CustomCursor adds flare. 
+   To hide default use: cursor: none; 
+*/

@@ -1,5 +1,6 @@
 import { Calendar, ArrowRight } from 'lucide-react';
 import GlareHover from './GlareHover';
+import { motion, Variants } from 'motion/react';
 
 const news = [
     {
@@ -25,6 +26,21 @@ const news = [
     }
 ];
 
+const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15
+        }
+    }
+};
+
+const itemAnim: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 40 } }
+};
+
 export function News() {
     return (
         <section id="news" className="pb-24 px-6 bg-[#050507]">
@@ -39,9 +55,15 @@ export function News() {
                     </a>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, margin: "-50px" }}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                >
                     {news.map((item) => (
-                        <div key={item.id} onClick={() => { }} className="group rounded-2xl cursor-pointer">
+                        <motion.div variants={itemAnim} key={item.id} onClick={() => { }} className="group rounded-2xl cursor-pointer">
                             <GlareHover
                                 width="100%"
                                 height="100%"
@@ -74,9 +96,9 @@ export function News() {
                                     </div>
                                 </div>
                             </GlareHover>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

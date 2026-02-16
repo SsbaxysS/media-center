@@ -1,8 +1,10 @@
 import { ArrowRight, Play } from 'lucide-react';
 import Dither from './Dither';
-import TextType from './TextType';
 import BlurText from './BlurText';
 import Counter from './Counter';
+import ScrollDown from './ScrollDown';
+import { useState } from 'react';
+import { motion } from 'motion/react';
 
 export function Hero() {
     return (
@@ -31,12 +33,12 @@ export function Hero() {
                 <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.05] mb-6 text-white">
                     МедиаЦентр <br />
                     <span className="text-violet-400">
-                        <TextType
-                            text={["школы", "будущего", "твоих идей"]}
-                            typingSpeed={100}
-                            deletingSpeed={50}
-                            pauseDuration={2000}
-                            cursorCharacter="_"
+                        <BlurText
+                            text="школы будущего"
+                            delay={150}
+                            animateBy="words"
+                            direction="top"
+                            className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-violet-400"
                         />
                     </span>
                 </h1>
@@ -53,20 +55,42 @@ export function Hero() {
                         Наша команда <ArrowRight className="w-4 h-4" />
                     </a>
                 </div>
+
+                <ScrollDown />
+
                 <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/[0.04] pt-10">
-                    {[
-                        { value: "50+", label: "Репортажей" },
-                        { value: "100+", label: "Эфиров" },
-                        { value: "15", label: "Наград" },
-                        { value: "24/7", label: "Творчества" },
-                    ].map((s) => (
-                        <div key={s.label} className="text-center">
-                            <div className="text-3xl font-bold mb-1 text-white">{s.value}</div>
-                            <div className="text-xs text-zinc-500 uppercase tracking-widest">{s.label}</div>
-                        </div>
-                    ))}
+                    <div className="text-center">
+                        <div className="text-3xl font-bold mb-1 text-white flex justify-center"><AnimatedCounter value={50} />+</div>
+                        <div className="text-xs text-zinc-500 uppercase tracking-widest">Репортажей</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl font-bold mb-1 text-white flex justify-center"><AnimatedCounter value={100} />+</div>
+                        <div className="text-xs text-zinc-500 uppercase tracking-widest">Эфиров</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl font-bold mb-1 text-white flex justify-center"><AnimatedCounter value={15} /></div>
+                        <div className="text-xs text-zinc-500 uppercase tracking-widest">Наград</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-3xl font-bold mb-1 text-white flex justify-center">24/7</div>
+                        <div className="text-xs text-zinc-500 uppercase tracking-widest">Творчества</div>
+                    </div>
                 </div>
             </div>
         </section >
+    );
+}
+
+function AnimatedCounter({ value }: { value: number }) {
+    const [count, setCount] = useState(0);
+
+    return (
+        <motion.div
+            onViewportEnter={() => setCount(value)}
+            viewport={{ once: true }}
+            className="flex items-center"
+        >
+            <Counter value={count} fontSize={36} padding={0} gap={2} />
+        </motion.div>
     );
 }

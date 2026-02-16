@@ -1,4 +1,5 @@
 import { Calendar, ArrowRight } from 'lucide-react';
+import GlareHover from './GlareHover';
 
 const news = [
     {
@@ -38,33 +39,41 @@ export function News() {
                     </a>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {news.map((item) => (
-                        <div key={item.id} className="group border border-white/[0.04] bg-white/[0.01] rounded-2xl overflow-hidden hover:border-violet-500/20 transition-all cursor-pointer">
-                            <div className="relative h-48 overflow-hidden">
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                                <div className="absolute top-3 left-3">
-                                    <span className="text-[10px] text-white bg-violet-600/90 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium shadow-lg">
-                                        {item.category}
-                                    </span>
+                        <div key={item.id} onClick={() => { }} className="group rounded-2xl cursor-pointer">
+                            <GlareHover
+                                width="100%"
+                                height="100%"
+                                borderRadius="16px"
+                                glareColor="#8b5cf6"
+                                className="bg-[#0a0a0c] border border-white/[0.04] group-hover:border-violet-500/30 transition-colors"
+                            >
+                                <div className="relative h-48 overflow-hidden w-full">
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                    <div className="absolute top-3 left-3 z-10">
+                                        <span className="text-[10px] text-white bg-violet-600/90 backdrop-blur-sm px-2.5 py-1 rounded-full font-medium shadow-lg">
+                                            {item.category}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-5">
-                                <div className="flex items-center gap-2 text-zinc-500 text-xs mb-3">
-                                    <Calendar size={12} />
-                                    {item.date}
+                                <div className="p-5 w-full">
+                                    <div className="flex items-center gap-2 text-zinc-500 text-xs mb-3">
+                                        <Calendar size={12} />
+                                        {item.date}
+                                    </div>
+                                    <h3 className="font-semibold text-white mb-2 group-hover:text-violet-400 transition-colors">
+                                        {item.title}
+                                    </h3>
+                                    <div className="flex items-center gap-2 text-violet-500 text-xs font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
+                                        Читать полностью <ArrowRight size={12} />
+                                    </div>
                                 </div>
-                                <h3 className="font-semibold text-white mb-2 group-hover:text-violet-400 transition-colors">
-                                    {item.title}
-                                </h3>
-                                <div className="flex items-center gap-2 text-violet-500 text-xs font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all">
-                                    Читать полностью <ArrowRight size={12} />
-                                </div>
-                            </div>
+                            </GlareHover>
                         </div>
                     ))}
                 </div>

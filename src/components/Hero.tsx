@@ -1,6 +1,8 @@
 import { ArrowRight, Play } from 'lucide-react';
 import Dither from './Dither';
 import TextType from './TextType';
+import BlurText from './BlurText';
+import Counter from './Counter';
 
 export function Hero() {
     return (
@@ -51,7 +53,20 @@ export function Hero() {
                         Наша команда <ArrowRight className="w-4 h-4" />
                     </a>
                 </div>
+                <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/[0.04] pt-10">
+                    {[
+                        { value: "50+", label: "Репортажей" },
+                        { value: "100+", label: "Эфиров" },
+                        { value: "15", label: "Наград" },
+                        { value: "24/7", label: "Творчества" },
+                    ].map((s) => (
+                        <div key={s.label} className="text-center">
+                            <div className="text-3xl font-bold mb-1 text-white">{s.value}</div>
+                            <div className="text-xs text-zinc-500 uppercase tracking-widest">{s.label}</div>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </section>
+        </section >
     );
 }

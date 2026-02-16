@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Newspaper, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ShinyText from './ShinyText';
 
 export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
